@@ -2,14 +2,6 @@ import Item from "@/app/models/item.model";
 import Section from "@/app/models/section.model";
 import { connect } from "@/connect";
 
-export const config = {
-	api: {
-		bodyParser: {
-			sizeLimit: "10mb",
-		},
-		responseLimit: "10mb",
-	},
-};
 export async function GET(request: Request) {
 	await connect();
 	const { searchParams } = new URL(request.url);
@@ -43,6 +35,7 @@ export async function POST(request: Request) {
 			return Response.json({ error: "Couldn't create Item" }, { status: 500 });
 		}
 	} catch (error) {
+		console.error(error);
 		return Response.json({ error: "Invalid request body" }, { status: 400 });
 	}
 }

@@ -63,7 +63,7 @@ const SectionItemsPage = ({ params }: SectionItemsPageProps) => {
 		};
 
 		fetchSections();
-	}, []);
+	}, [id]);
 
 	if (!isLoaded || !isSignedIn) {
 		return null;

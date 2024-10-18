@@ -5,21 +5,19 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { TextField, Button, Box } from "@mui/material";
 import { useTheme as useNextTheme } from "next-themes";
 
-interface SectionFormProps {}
-
-const SectionForm: React.FC<SectionFormProps> = () => {
+const SectionForm: React.FC = () => {
 	const { theme } = useNextTheme();
 	const isDark = theme === "dark";
 	const isLight = theme === "light";
 
 	const [name, setName] = useState<string>("");
-	const [error, setError] = useState<string | null>(null);
+	// const [error, setError] = useState<string | null>(null);
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 
 		if (!name) {
-			setError("Please provide a valid section name.");
+			// setError("Please provide a valid section name.");
 			return;
 		}
 
@@ -37,9 +35,10 @@ const SectionForm: React.FC<SectionFormProps> = () => {
 			}
 
 			setName("");
-			setError(null);
+			// setError(null);
 		} catch (error) {
-			setError((error as Error).message);
+			console.error(error);
+			// setError((error as Error).message);
 		}
 	};
 

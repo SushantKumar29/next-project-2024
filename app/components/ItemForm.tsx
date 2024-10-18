@@ -8,18 +8,15 @@ interface Section {
 	name: string;
 }
 
-interface ItemFormProps {}
-
-const ItemForm: React.FC<ItemFormProps> = () => {
+const ItemForm: React.FC = () => {
 	const { theme } = useNextTheme();
 
 	const isDark = theme === "dark";
 	const [name, setName] = useState<string>("");
 	const [sections, setSections] = useState<Section[]>([]);
 	const [selectedSection, setSelectedSection] = useState<string>("");
-	const [error, setError] = useState<string | null>(null);
+	// const [error, setError] = useState<string | null>(null);
 
-	// Fetch section when the form loads
 	useEffect(() => {
 		const fetchSection = async () => {
 			try {
@@ -38,7 +35,7 @@ const ItemForm: React.FC<ItemFormProps> = () => {
 		event.preventDefault();
 
 		if (!name || !selectedSection) {
-			setError("Please provide valid name, price, and section.");
+			// setError("Please provide valid name, price, and section.");
 			return;
 		}
 
@@ -59,11 +56,12 @@ const ItemForm: React.FC<ItemFormProps> = () => {
 			// Reset form
 			setName("");
 			setSelectedSection("");
-			setError(null);
+			// setError(null);
 
 			// Optionally, refresh the items list on successful creation
 		} catch (error) {
-			setError((error as Error).message);
+			console.error(error);
+			// setError((error as Error).message);
 		}
 	};
 
