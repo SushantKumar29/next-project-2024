@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
-import { ClerkProvider, ClerkLoaded, ClerkLoading } from "@clerk/nextjs";
-import Navbar from "./components/Navbar";
 import { dark } from "@clerk/themes";
+import { ClerkProvider, ClerkLoaded, ClerkLoading } from "@clerk/nextjs";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
+import Navbar from "./components/Navbar";
+import Loader from "./components/Loader";
+import { ThemeProvider } from "./components/ThemeProvider";
+import "./globals.css";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -32,19 +35,26 @@ export default function RootLayout({
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>
-					<ClerkLoading>
-						<div className='flex items-center justify-center h-screen text-2xl'>
-							LOADING...
-						</div>
-					</ClerkLoading>
-					<ClerkLoaded>
-						<div className='max-w-6xl mx-auto'>
-							<div className='flex flex-col h-screen'>
-								<Navbar />
-								{children}
-							</div>
-						</div>
-					</ClerkLoaded>
+					<AppRouterCacheProvider>
+						<ThemeProvider
+							attribute='class'
+							defaultTheme='system'
+							enableSystem
+							disableTransitionOnChange
+						>
+							<ClerkLoading>
+								<div className='flex items-center justify-center h-screen text-2xl'>
+									<Loader />
+								</div>
+							</ClerkLoading>
+							<ClerkLoaded>
+								<div className='mx-auto'>
+									<Navbar />
+									<div className='flex flex-col h-screen py-4'>{children}</div>
+								</div>
+							</ClerkLoaded>
+						</ThemeProvider>
+					</AppRouterCacheProvider>
 				</body>
 			</html>
 		</ClerkProvider>
